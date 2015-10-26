@@ -10,7 +10,8 @@ end
 
 for x=1:X
   for y=1:Y
-    J(x, y, :) = uint8(sum(sum(mask_s .* double(I_bordered(x:x+M-1, y:y+N-1, :)))));
+    for z =1:3
+    J(x, y, z) = uint8(sum(sum(mask_s .* double(I_bordered(x:x+M-1, y:y+N-1, z)))));
   end
 end
 end

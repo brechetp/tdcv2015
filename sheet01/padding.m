@@ -14,9 +14,12 @@ case 0 % copy-the-border treatment
   border_yr = I(:, Y, :);
   I_bordered(1:m, (n+1):(n+Y), :) = repmat(border_xu, [m, 1]);
   I_bordered((m+X+1):(M+X-1), (n+1):(n+Y), :) = repmat(border_xd, [m, 1]);
+  I_bordered((m+1):(m+X), 1:n, :) = repmat(border_yl, [1, n]);
+  I_bordered((m+1):(m+X), (n+Y+1):(N-1+Y), :) = repmat(border_yr, [1, n]);
 
 case 1 % mirror the border treatment
-    I_bordered = padarray(I, [m, n], 'symmetric');
+    %I_bordered = padarray(I, [m, n], 'symmetric');
+  
 otherwise
     error('The padding style is not recognized');
 
