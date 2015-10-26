@@ -1,4 +1,4 @@
-I = imread('baboon.tif');
+I = imread('images/baboon.tif');
 I_copy = padding(I, 25, 25, 0);
 I_mirror = padding(I, 25, 25, 0);
 

@@ -7,15 +7,13 @@ n = floor(N/2);
 switch param
 case 0 % copy-the-border treatment
   %I_bordered = padarray(I, [m, n], 'replicate');
-  for z = 1:Z
-    I_bordered(1+m:m+X, 1+n:n+Y, z) = I(1:X, 1:Y, z);
-    border_xu = I(1, :, z);
-    border_xd = I(X, :, z);
-    border_yl = I(:, 1, z);
-    border_yr = I(:, Y, z);
-    I_bordered(1:m, (n+1):(n+Y), z) = repmat(border_xu, [m, 1]);
-    I_bordered((m+X+1):(M+X-1), (n+1):(n+Y), z) = repmat(border_xd, [m, 1]);
-  end
+  I_bordered(1+m:m+X, 1+n:n+Y, :) = I(1:X, 1:Y, :);
+  border_xu = I(1, :, :);
+  border_xd = I(X, :, :);
+  border_yl = I(:, 1, :);
+  border_yr = I(:, Y, :);
+  I_bordered(1:m, (n+1):(n+Y), :) = repmat(border_xu, [m, 1]);
+  I_bordered((m+X+1):(M+X-1), (n+1):(n+Y), :) = repmat(border_xd, [m, 1]);
 
 case 1 % mirror the border treatment
     I_bordered = padarray(I, [m, n], 'symmetric');
