@@ -57,5 +57,5 @@ diff = [sqr_diff(img_blur_1_1, img_blur_2_1), sqr_diff(img_blur_1_2, img_blur_2_
 
 
 % the square difference is equal to 0, so the filterings are equivalent
-
+% Is it really 0? In my test runs it's a very big number
  
