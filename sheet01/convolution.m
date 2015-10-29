@@ -2,11 +2,12 @@ function J = convolution(I, mask, pad_type)
 [X, Y, Z] = size(I);
 [M,N] = size(mask);
 I_bordered = padding(I, M, N, pad_type);
-if sum(sum(mask)) ~= 0
-  mask_s= flipud(fliplr(mask))/(sum(sum(mask)));
-else
-  mask_s= flipud(fliplr(mask));
-end
+%if sum(sum(mask)) ~= 0
+%  mask_s= flipud(fliplr(mask))/(sum(sum(mask)));
+%else
+%  mask_s= flipud(fliplr(mask));
+%end
+mask_s= flipud(fliplr(mask));
 
 for z =1:Z
   for x=1:X

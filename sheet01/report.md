@@ -2,6 +2,8 @@ Tracking and detection
 =====
 Exercise sheet #1
 -----
+Bréchet (03672392), von Stumberg (03643493)
+-----
 ### Exercise 1
 #### Remarks
 
