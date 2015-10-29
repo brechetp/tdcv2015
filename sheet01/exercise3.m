@@ -1,3 +1,4 @@
+%% Exercise 3
 close all;
 Dx = repmat(-1:1, [3, 1]);
 Dy = Dx';
@@ -9,10 +10,9 @@ img = imread('images/man.tiff');
 %figure()
 %imshow(img_grad_x)
 [M, O] = gradient(img);
-figure()
-imshow(M)
-figure()
-imshow(mat2gray(O))
+figure('Name', 'Gradient (amplitude, orientation) for the image')
+subplot(1, 2, 1), subimage(M)
+subplot(1, 2, 2), subimage(O)
 
 % noise reduction
 
@@ -25,5 +25,10 @@ tic
 I_3 = convolution( img, convolution(G, Dx, 0), 0);
 I_4 = convolution( img, convolution(G, Dy, 0), 0);
 toc
-sqr_diff(I_1, I_3)
-sqr_diff(I_2, I_4)
+figure('Name', 'convolutions (first row is D * (G*I))')
+subplot(2, 2, 1), subimage(I_1)
+subplot(2, 2, 2), subimage(I_2)
+subplot(2, 2, 3), subimage(I_3)
+subplot(2, 2, 4), subimage(I_4)
+diff = [sqr_diff(I_1, I_3), sqr_diff(I_2, I_4)]
+ration = diff ./ [sum(sum(sum(I_1 .^2))), sum(sum(sum(I_2 .^2)))]
