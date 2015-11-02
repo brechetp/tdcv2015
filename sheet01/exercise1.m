@@ -14,6 +14,4 @@ mean_mask = 1/9 * [1, 1, 1; 1, 1, 1; 1, 1, 1];
 %mean_mask = [-1, -1, -1; -1, 8,  -1; -1, -1, -1]
 img_filtered = convolution(disc, mean_mask, 0);
 figure('Name', 'Mean filter')
-subplot(1,2,2), subimage(img_filtered)
-subplot(1,2,1), subimage(disc)
-
+subplot(1,2,2), subimage(uint8(img_filtered))

@@ -13,8 +13,8 @@ img_blur_1_2 = convolution(img, gauss_mask_3, 0);
 toc
 figure('Name', 'Gaussian blur with sigma = 1, 3');
 subplot(1, 3, 1), subimage(img)
-subplot(1, 3, 2), subimage(img_blur_1_1)
-subplot(1, 3, 3), subimage(img_blur_1_2)
+subplot(1, 3, 2), subimage(uint8(img_blur_1_1))
+subplot(1, 3, 3), subimage(uint8(img_blur_1_2))
 
 % the more sigma is important, the more blurry the image is
 
@@ -34,8 +34,8 @@ img_blur_2_2 = convolution(im_tmp, m_y_2, 0); % second blur with sigma = 1
 toc
 figure('Name', 'Gaussian blur sigma=1, 3 on X then Y')
 subplot(1, 3, 1), subimage(img)
-subplot(1, 3, 2), subimage(img_blur_2_1)
-subplot(1, 3, 3), subimage(img_blur_2_2)
+subplot(1, 3, 2), subimage(uint8(img_blur_2_1))
+subplot(1, 3, 3), subimage(uint8(img_blur_2_2))
 diff = [sqr_diff(img_blur_1_1, img_blur_2_1), sqr_diff(img_blur_1_2, img_blur_2_2)]
 ratio = diff ./ [sum(sum(sum(img_blur_1_1 .^2))), sum(sum(sum(img_blur_1_2 .^2)))]
 
