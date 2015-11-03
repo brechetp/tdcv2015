@@ -7,5 +7,5 @@ if size(I, 3) == 3
 end
 X = convolution(I, Dx, 0);
 Y = convolution(I, Dy, 0);
-magn = mat2gray(sqrt(double(X.^2 + Y.^2)));
-orient = mat2gray(atan(double(Y./X)));
+magn = sqrt(double(X.^2 + Y.^2));
+orient = atan(double(Y./X));
