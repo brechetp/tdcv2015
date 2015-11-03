@@ -18,12 +18,12 @@ subplot(1, 2, 2), subimage(O)
 
 G = gauss(3);
 tic
-I_1 = convolution( convolution(img, G, 0), Dx, 0);
-I_2 = convolution( convolution(img, G, 0), Dy, 0);
+I_1 = convolution( convolution2(img, G, 0), Dx, 0);
+I_2 = convolution( convolution2(img, G, 0), Dy, 0);
 toc
 tic
-I_3 = convolution( img, convolution(G, Dx, 0), 0);
-I_4 = convolution( img, convolution(G, Dy, 0), 0);
+I_3 = convolution( img, convolution2(G, Dx, 0), 0);
+I_4 = convolution( img, convolution2(Dy, G, 0), 0);
 toc
 figure('Name', 'convolutions (first row is D * (G*I))')
 subplot(2, 2, 1), subimage(I_1)
@@ -32,3 +32,5 @@ subplot(2, 2, 3), subimage(I_3)
 subplot(2, 2, 4), subimage(I_4)
 diff = [sqr_diff(I_1, I_3), sqr_diff(I_2, I_4)]
 ration = diff ./ [sum(sum(sum(I_1 .^2))), sum(sum(sum(I_2 .^2)))]
+
+
