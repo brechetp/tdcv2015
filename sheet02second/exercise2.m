@@ -25,15 +25,15 @@ toc
 tic
 res10 = bilateral2(img, 10, 10, 10);
 toc
-% tic
-% res10slow = bilateral(img, 10, 10, 10);
+ %tic
+ %res10slow = bilateral(img, 10, 10, 10);
 % toc
 
 figure('Name', 'Images')
 subplot(2,3,1), subimage(res1)
 subplot(2,3,2), subimage(res5)
 subplot(2,3,3), subimage(res10)
-subplot(2,3,4), subimage(res10slow)
+%subplot(2,3,4), subimage(res10slow)
 
 tic
 gaussed = convolution(img1, gauss(1), 0);
