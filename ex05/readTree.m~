@@ -1,0 +1,8 @@
+function [ out ] = readTree( n )
+    
+    file = fopen(['files/Tree' int2str(n) '.txt']);
+    C = textscan(file, '%i %i %i %f %i %i %i %i %i %i ');
+    fclose(file);
+    
+end
+
