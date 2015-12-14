@@ -1,6 +1,6 @@
-pot_rgb = imread('../imgs/pot.jpg');
+pot_rgb = imread('../images/shell.jpg');
 pot = single(rgb2gray(pot_rgb));
-pot_test_1_rgb = imread('../imgs/test_pot1.jpg');
+pot_test_1_rgb = imread('../images/test_shell1.jpg');
 pot_test_1 = single(rgb2gray(pot_test_1_rgb));
 
 [fp, dp] = vl_sift(pot);
