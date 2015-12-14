@@ -1,6 +1,0 @@
-function [ out ] = ransac( P1, P2, s, T, N)
-
-    while tr
-
-end
-

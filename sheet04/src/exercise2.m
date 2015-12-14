@@ -12,7 +12,9 @@ scene_hog = vl_hog(test_img, cellSize, 'verbose');
 scene_imhog = vl_hog('render', scene_hog, 'verbose');
 clf; imagesc(scene_imhog) ; colormap gray ;
 
-scores = conv2(scene_imhog, imhog, 'same');
+scores = vl_nnconv(scene_hog, hog,[]);
+imshow(mat2gray(scores));
+[best, bestIndex] = max(scores(:));
 [hy, hx] = ind2sub(size(scores), bestIndex) ;
 x = (hx - 1) * cellSize + 1 ;
 y = (hy - 1) * cellSize + 1 ;
