@@ -4,6 +4,10 @@ pot = single(rgb2gray(pot_rgb));
 pot_test_1_rgb = imread('../imgs/test_pot2.jpg');
 pot_test_1 = single(rgb2gray(pot_test_1_rgb));
 
+pot = single(rgb2gray(pot_rgb));
+pot_test_1_rgb = imread('../imgs/test_pot2.jpg');
+pot_test_1 = single(rgb2gray(pot_test_1_rgb));
+
 [fp, dp] = vl_sift(pot);
 [fpt1, dpt1] = vl_sift(pot_test_1);
 
