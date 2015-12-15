@@ -1,4 +1,4 @@
-function [ out ] = f( R, T, A, M, m )
+function [ out ] = fun( R, T, A, M, m )
 
 [X, Y] = size(M);
 
