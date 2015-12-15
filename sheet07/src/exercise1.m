@@ -1,11 +1,11 @@
 close all;
 rthreshold = 5; % threshold for RANSAC
 A = [[472.3, 0.64, 329.0]; [0, 471.0, 268.3]; [0, 0, 1]];
-N = 45;
+T = 45;
 img0 = imread('../data/0000.png');
 [height, width, color] = size(img0); 
-imgs = cell(N, 1);
-for i =2:N
+imgs = cell(T, 1);
+for i =2:T
   number = [repmat('0', [1, 3-floor(log10(i-1))]), num2str(i-1)];
   imgs{i} = imread(['../data/', number, '.png']);
 end
@@ -20,16 +20,16 @@ for i=1:size(f0, 2)
 end
 f0 = f0(:, idx);
 d0 = d0(:, idx);
-m = cell(N, 1);
-m_tilde = cell(N, 1);
-M = cell(N, 1);
-m{1} = [f0(1, :); f0(2, :)]';
-n = size(m, 1);
-m_tilde{1} = [m{1}, ones(n, 1)];
-M{1} = (inv(A) * m_tilde')';
+m_tilde = cell(T, 1); % we store all T Nt*2 pair correspondence points
+M = cell(T, 1); % all points from the original image projeted in 3D
+m0 = [f0(1, :); f0(2, :)]';
+n = size(m0, 1);
+m_tilde{1}(1, :, :) = [m0, ones(n, 1)];
+m_tilde{1}(2, :, :) = [m0, ones(n, 1)]; % for the image 0 it doesn't really make sense
+M{1} = (inv(A) * m_tilde{1}(1)')';
 
 
-for i = 2:N
+for i = 2:T
   [f, d] = vl_sift(single(rgb2gray(imgs{i})));
   [matches, scores] = vl_ubcmatch(d0, d);
   P1 = f0(1:2, matches(1, :))';
@@ -52,7 +52,8 @@ for i = 2:N
   %h4 = vl_plotframe(f0(:, matches(1, :)));
 
 %showMatchedFeatures(object, scene, f0(1:2, matches(1, :))', f(1:2, matches(2, :))'); 
-  m_tilde{i} = [P1(inliers_indices, :), P2(inliers_indices, :)]; % the filtered correspondant points
+  m_tilde{i}(1, :, :) = P1(inliers_indices, :);
+  m_tilde{i}(2, :, :)= P2(inliers_indices, :); % the filtered correspondant points
   
 
   %object_points = normalcoords(P1(inliers_indices, :));
