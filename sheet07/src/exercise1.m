@@ -5,9 +5,9 @@ T = 45;
 img0 = imread('../data/0000.png');
 [height, width, color] = size(img0); 
 imgs = cell(T, 1);
-for i =2:T
-  number = [repmat('0', [1, 3-floor(log10(i-1))]), num2str(i-1)];
-  imgs{i} = imread(['../data/', number, '.png']);
+for t =2:T
+  number = [repmat('0', [1, 3-floor(log10(t-1))]), num2str(t-1)];
+  imgs{t} = imread(['../data/', number, '.png']);
 end
 [f0, d0] = vl_sift(single(rgb2gray(img0)));
 x = f0(1, :);
@@ -24,13 +24,12 @@ m_tilde = cell(T, 1); % we store all T Nt*2 pair correspondence points
 M = cell(T, 1); % all points from the original image projeted in 3D
 m0 = [f0(1, :); f0(2, :)]';
 n = size(m0, 1);
-m_tilde{1}(1, :, :) = [m0, ones(n, 1)];
-m_tilde{1}(2, :, :) = [m0, ones(n, 1)]; % for the image 0 it doesn't really make sense
-M{1} = (inv(A) * m_tilde{1}(1)')';
+m_tilde{1} = [m0, ones(n, 1)];
+M{1} = (inv(A) * m_tilde{1}')';
 
 
-for i = 2:T
-  [f, d] = vl_sift(single(rgb2gray(imgs{i})));
+for t = 2:T
+  [f, d] = vl_sift(single(rgb2gray(imgs{t})));
   [matches, scores] = vl_ubcmatch(d0, d);
   P1 = f0(1:2, matches(1, :))';
   P2 = f(1:2, matches(2,:))';
@@ -52,8 +51,8 @@ for i = 2:T
   %h4 = vl_plotframe(f0(:, matches(1, :)));
 
 %showMatchedFeatures(object, scene, f0(1:2, matches(1, :))', f(1:2, matches(2, :))'); 
-  m_tilde{i}(1, :, :) = P1(inliers_indices, :);
-  m_tilde{i}(2, :, :)= P2(inliers_indices, :); % the filtered correspondant points
+  M{t} = (inv(A) * P1(inliers_indices, :)')';
+  m_tilde{t} = P2(inliers_indices, :); % the filtered correspondant points
   
 
   %object_points = normalcoords(P1(inliers_indices, :));
