@@ -4,6 +4,7 @@ A = [[472.3, 0.64, 329.0]; [0, 471.0, 268.3]; [0, 0, 1]];
 N = 45;
 img0 = imread('../data/0000.png');
 [height, width, color] = size(img0); 
+imgs = cell(N, 1);
 for i =2:N
   number = [repmat('0', [1, 3-floor(log10(i-1))]), num2str(i-1)];
   imgs{i} = imread(['../data/', number, '.png']);
@@ -19,10 +20,13 @@ for i=1:size(f0, 2)
 end
 f0 = f0(:, idx);
 d0 = d0(:, idx);
-m = [f0(1, :); f0(2, :)]';
+m = cell(N, 1);
+m_tilde = cell(N, 1);
+M = cell(N, 1);
+m{1} = [f0(1, :); f0(2, :)]';
 n = size(m, 1);
-m_tilde = [m, ones(n, 1)];
-M = (inv(A) * m_tilde')';
+m_tilde{1} = [m{1}, ones(n, 1)];
+M{1} = (inv(A) * m_tilde')';
 
 
 for i = 2:N
@@ -35,28 +39,30 @@ for i = 2:N
   [H inliers_indices] = ransac_adapt(P1, P2, rthreshold, 0.99); % threshold 2
 
 
-  stacked = zeros(height, 2*width, 3);
-  stacked = cast(stacked, class(img0));
-  stacked(1:height, 1:width, :) = img0;
-  stacked(1:height, width+1:width+width, :) = imgs{i};
+  %stacked = zeros(height, 2*width, 3);
+  %stacked = cast(stacked, class(img0));
+  %stacked(1:height, 1:width, :) = img0;
+  %stacked(1:height, width+1:width+width, :) = imgs{i};
 
-  f_stacked = [f(1, :) + width; f(2, :); f(3, :); f(4, :)];
-  fig = figure;
-  imshow(stacked);
-  hold on;
+  %f_stacked = [f(1, :) + width; f(2, :); f(3, :); f(4, :)];
+  %fig = figure;
+  %imshow(stacked);
+  %hold on;
   %h3 = vl_plotframe(f_stacked(:, matches(2, :)));
   %h4 = vl_plotframe(f0(:, matches(1, :)));
 
 %showMatchedFeatures(object, scene, f0(1:2, matches(1, :))', f(1:2, matches(2, :))'); 
+  m_tilde{i} = [P1(inliers_indices, :), P2(inliers_indices, :)]; % the filtered correspondant points
+  
 
-  object_points = normalcoords(P1(inliers_indices, :));
-  scene_points = normalcoords(P2(inliers_indices, :));
-  for i = 1:size(object_points, 1)
-    plot([object_points(i, 1), scene_points(i, 1) + width], [object_points(i, 2), scene_points(i, 2)], 'b');
-  end
-  title([num2str(size(inliers_indices, 1)) ' inliers (' num2str(size(inliers_indices, 1) / size(matches, 2)) '%)'])
-  number = [repmat('0', [1, 3-floor(log10(i-1))]), num2str(i-1)];
-  saveas(fig, ['../res/', number, '.png']);
+  %object_points = normalcoords(P1(inliers_indices, :));
+  %scene_points = normalcoords(P2(inliers_indices, :));
+  %for j = 1:size(object_points, 1)
+  %  plot([object_points(j, 1), scene_points(j, 1) + width], [object_points(j, 2), scene_points(j, 2)], 'b');
+  %end
+  %title([num2str(size(inliers_indices, 1)) ' inliers (' num2str(size(inliers_indices, 1) / size(matches, 2)) '%)'])
+  %number = [repmat('0', [1, 3-floor(log10(i-1))]), num2str(i-1)];
+  %saveas(fig, ['../res/', number, '.png']);
 end
 
 
