@@ -1,4 +1,5 @@
 close all;
+run('/usr/local/src/vlfeat-0.9.20/toolbox/vl_setup.m');
 rthreshold = 5; % threshold for RANSAC
 A = [[472.3, 0.64, 329.0]; [0, 471.0, 268.3]; [0, 0, 1]];
 T = 45;
