@@ -41,7 +41,7 @@ for t = 2:T
   %stacked = zeros(height, 2*width, 3);
   %stacked = cast(stacked, class(img0));
   %stacked(1:height, 1:width, :) = img0;
-  %stacked(1:height, width+1:width+width, :) = imgs{i};
+  %stacked(1:height, width+1:width+width, :) = imgs{t};
 
   %f_stacked = [f(1, :) + width; f(2, :); f(3, :); f(4, :)];
   %fig = figure;
@@ -50,7 +50,6 @@ for t = 2:T
   %h3 = vl_plotframe(f_stacked(:, matches(2, :)));
   %h4 = vl_plotframe(f0(:, matches(1, :)));
 
-%showMatchedFeatures(object, scene, f0(1:2, matches(1, :))', f(1:2, matches(2, :))'); 
   M{t} = (inv(A) * P1(inliers_indices, :)')';
   m_tilde{t} = P2(inliers_indices, :); % the filtered correspondant points
   
@@ -58,10 +57,10 @@ for t = 2:T
   %object_points = normalcoords(P1(inliers_indices, :));
   %scene_points = normalcoords(P2(inliers_indices, :));
   %for j = 1:size(object_points, 1)
-  %  plot([object_points(j, 1), scene_points(j, 1) + width], [object_points(j, 2), scene_points(j, 2)], 'b');
+   % plot([object_points(j, 1), scene_points(j, 1) + width], [object_points(j, 2), scene_points(j, 2)], 'b');
   %end
   %title([num2str(size(inliers_indices, 1)) ' inliers (' num2str(size(inliers_indices, 1) / size(matches, 2)) '%)'])
-  %number = [repmat('0', [1, 3-floor(log10(i-1))]), num2str(i-1)];
+  %number = [repmat('0', [1, 3-floor(log10(t-1))]), num2str(t-1)]
   %saveas(fig, ['../res/', number, '.png']);
 end
 
