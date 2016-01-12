@@ -41,6 +41,9 @@ for x=x_min:5:x_max
     i = i+1;
   end
 end
+m = mean(warped_image);
+std_dev = std(warped_image);
+warped_image = (warped_image - m) / std_dev;
 return
 
 
