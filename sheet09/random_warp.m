@@ -1,4 +1,4 @@
-function [warped_image, shift] = random_warp(image, coordinates)
+function [warped_image, shift] = random_warp(image, coordinates, range)
 
 x_min = min(coordinates(:, 1));
 x_max = max(coordinates(:, 1));
@@ -6,7 +6,7 @@ y_min = min(coordinates(:, 2));
 y_max = max(coordinates(:, 2));
 X_MIN = 1;
 Y_MIN = 1;
-[X_MAX, Y_MAX,] = size(image)
+[X_MAX, Y_MAX,] = size(image);
 
 % x_min, y_min ----------- x_max, y_min
 %       |                       |
@@ -15,13 +15,14 @@ Y_MIN = 1;
 % x_max, y_min ----------- x_max, y_max
 % We're sure to have a well formated rectangle
 corners = [[x_min, y_min]; [x_min, y_max]; [x_max, y_min]; [x_max, y_max]];
-range = 5; % range in pixels
+%range = 5; % range in pixels
 shift = zeros(4, 2);
 rand_corners = zeros(4, 2);
 for i=1:4
   for j=1:2
-    shift(i,j) = 10 * (j==1) + 0 * (j==2)%floor(rand * (2*range) - range)
-    rand_corners(i,j) = corners(i,j) + shift(i,j)
+    %shift(i,j) = 10 * (j==1) + 0 * (j==2)%floor(rand * (2*range) - range)
+    shift(i,j) = floor(rand * (2*range) - range);
+    rand_corners(i,j) = corners(i,j) + shift(i,j);
   end
 end
 n_corners = [corners, ones(4, 1)];

@@ -22,21 +22,31 @@ imStacked = img(:);
 
 R = [1, 4, 6, 7];
 
+xMin = 300;
+
+xMax = 400;
+yMin = 300;
+yMax = 400;
+
+coords = [xMin, yMin; xMax, yMax];
+
+
+valueRef = computeRectangleValue(img, coords, zeros(1, 8));
+
 for j = 1:10
     
-    H = zeros(size(R,2), Np);
+    H = zeros(441, Np);
     Y = zeros(8, Np);
     range = j * 3;
     for i = 1:Np
         [warped, shift] = random_warp(img, coords, range);
 
-        warpedStacked = warped(:);
 
-        deltaI = imgStacked(R) - warpedStacked(R);
+        deltaI = valueRef - warped;
 
-        H(:,i) = deltaI;
+        H(:,i) = deltaI';
 
-        Y(:,i) = shift;
+        Y(:,i) = shift(:);
 
     end
     A{j} = Y * H' * inv(H * H');
@@ -44,9 +54,18 @@ end
 
 for numImg = 1:numImages
    img = imgs{numImg};
-   
+   p = zeros(8, 1);
    for numA = 1:10
       for iter = 1:5
+          val = computeRectangleValue(img, coords, p);
+          diff = val - valueRef;
+          
+          size(diff);
+          size(A{numImg});
+          
+          deltaP = A{numImg} * diff';
+          
+          p = p + deltaP;
           
       end
    end
