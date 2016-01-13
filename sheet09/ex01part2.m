@@ -12,7 +12,7 @@ for i = 1:numImages;
 end
 
 
-Np = 100;
+Np = 1000;
 coords=[[230, 260];[330, 360]];
 
 %img = im2double(imread(
@@ -36,7 +36,6 @@ yMax = 400;
 coords = [xMin, yMin; xMax, yMax];
 
 
-valueRef = computeRectangleValue(img, coords, zeros(1, 8));
 
 for j = 1:10
     
@@ -52,12 +51,12 @@ for j = 1:10
     A{j} = Y * H' * inv(H * H');
 end
 P = zeros(8, numImages);
-
+%
 for numImg = 1:numImages
    img = imgs{numImg};
-   p = zeros(8, 1);
    for numA = 1:10
       for iter = 1:5
+        
 
           
       end
