@@ -46,6 +46,7 @@ end
 m = mean(warped_image);
 std_dev = std(warped_image);
 warped_image = (warped_image' - m) / std_dev;
+warped_image = warped_image + 0.1*randn(size(warped_image)); % white noise N(0, 0.1) adding
 return
 
 
