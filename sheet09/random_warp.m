@@ -38,6 +38,8 @@ for x=x_min:5:x_max
     point = round(normalcoords(inv_point'));
     if point(1) >= X_MIN && point(1) <= X_MAX && point(2) >= Y_MIN && point(2) <= Y_MAX
       warped_image(i) = image(point(1), point(2));
+    else
+       warped_image(i) = 0; 
     end
     i = i+1;
   end
@@ -45,6 +47,7 @@ end
 m = mean(warped_image);
 std_dev = std(warped_image);
 warped_image = (warped_image - m) / std_dev;
+warped_image = warped_image + 0.1 * randn(size(warped_image));
 return
 
 
