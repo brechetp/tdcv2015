@@ -27,6 +27,17 @@ imStacked = img(:);
 
 R = [1, 4, 6, 7];
 
+xMin = 300;
+
+xMax = 400;
+yMin = 300;
+yMax = 400;
+
+coords = [xMin, yMin; xMax, yMax];
+
+
+valueRef = computeRectangleValue(img, coords, zeros(1, 8));
+
 for j = 1:10
     
     H = zeros(size(norm_i, 1), Np);
@@ -44,7 +55,7 @@ P = zeros(8, numImages);
 
 for numImg = 1:numImages
    img = imgs{numImg};
-   
+   p = zeros(8, 1);
    for numA = 1:10
       for iter = 1:5
 
