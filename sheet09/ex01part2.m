@@ -10,13 +10,15 @@ for i = 1:numImages;
     filename = sprintf('../../ex09/seq/im%03d.pgm', num );
     imgs{i} = im2double(imread(filename));
 end
-Np = 3000;
+Np = 1000;
+%Np = 100;
+%coords=[[230, 260];[330, 360]];
 
 %img = im2double(imread(
 
 img = imgs{1};
 
-imStacked = img(:);
+%imStacked = img(:);
 
 R = [1, 4, 6, 7];
 
@@ -30,11 +32,10 @@ coords = [xMin, yMin; xMax, yMax];
 
 %imshow(img(xMin:xMax, yMin:yMax));
 
-if 0
+if 1
     valueRef = computeRectangleValue(img, coords, zeros(1, 8));
     A = cell(1);
     for j = 1:10
-
         H = zeros(441, Np);
         Y = zeros(8, Np);
         range = j * 3;
@@ -42,7 +43,7 @@ if 0
             [warped, shift] = random_warp(img, coords, range);
 
 
-            deltaI = valueRef - warped;
+            deltaI = valueRef - warped';
 
             H(:,i) = deltaI';
 
@@ -52,6 +53,7 @@ if 0
         A{j} = Y * H' * inv(H * H');
     end
 end
+P = zeros(8, numImages);
 
 42
 p = zeros(8, 1)
@@ -61,6 +63,7 @@ for numImg = 1:numImages
    for numA = 10:-1:1
        numA;
       for iter = 1:5
+
           val = computeRectangleValue(img, coords, p);
           diff = val - valueRef;
           

@@ -20,8 +20,7 @@ shift = zeros(4, 2);
 rand_corners = zeros(4, 2);
 for i=1:4
   for j=1:2
-    %shift(i,j) = 10 * (j==1) + 0 * (j==2)%floor(rand * (2*range) - range)
-    shift(i,j) = floor(rand * (2*range) - range);
+    shift(i,j) = round(rand * (2*range) - range);
     rand_corners(i,j) = corners(i,j) + shift(i,j);
   end
 end
@@ -35,7 +34,7 @@ i=1; %  index of the warped vecotr
 for x=x_min:5:x_max
   for y=y_min:5:y_max
     inv_point = invH * [x; y; 1];
-    point = round(normalcoords(inv_point'));
+    point = round(normalcoords(inv_point')); % nearest neighbour
     if point(1) >= X_MIN && point(1) <= X_MAX && point(2) >= Y_MIN && point(2) <= Y_MAX
       warped_image(i) = image(point(1), point(2));
     else
@@ -46,8 +45,8 @@ for x=x_min:5:x_max
 end
 m = mean(warped_image);
 std_dev = std(warped_image);
-warped_image = (warped_image - m) / std_dev;
-warped_image = warped_image + 0.1 * randn(size(warped_image));
+warped_image = (warped_image' - m) / std_dev;
+warped_image = warped_image + 0.1*randn(size(warped_image)); % white noise N(0, 0.1) adding
 return
 
 
