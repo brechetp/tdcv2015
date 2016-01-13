@@ -1,6 +1,6 @@
 function display_points(image, points)
 % plots the region delimited by the 4 points in the image
-
+figure;
 imshow(image);
 hold on;
 for i =1:size(points, 1)
