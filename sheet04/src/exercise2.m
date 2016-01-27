@@ -1,0 +1,24 @@
+img_rgb = imread('../imgs/pot.jpg');
+test_img_rgb = imread('../imgs/test_pot1.jpg');
+img = single(rgb2gray(img_rgb));
+img = imresize(img, 1/8);
+test_img = single(rgb2gray(test_img_rgb));
+test_img = imresize(test_img, 1/4);
+cellSize = 8;
+hog = vl_hog(img, cellSize, 'verbose');
+imhog = vl_hog('render', hog, 'verbose');
+clf; imagesc(imhog) ; colormap gray ;
+scene_hog = vl_hog(test_img, cellSize, 'verbose');
+scene_imhog = vl_hog('render', scene_hog, 'verbose');
+clf; imagesc(scene_imhog) ; colormap gray ;
+
+scores = vl_nnconv(scene_hog, hog,[]);
+imshow(mat2gray(scores));
+[best, bestIndex] = max(scores(:));
+[hy, hx] = ind2sub(size(scores), bestIndex) ;
+x = (hx - 1) * cellSize + 1 ;
+y = (hy - 1) * cellSize + 1 ;
+figure;
+imshow(mat2gray(test_img));
+hold on;
+plot(cornerPoints([x, y]));
