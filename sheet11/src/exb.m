@@ -1,7 +1,7 @@
-image_file = '../data/paris.jpg';
+image_file = '../data/clutter.jpg';
 image = im2double(imread(image_file));
 new = 0;
-if new
+if new || ~exist('xt')
 [xt, yt] = getrect2(image); % odd width and height
 end
 template = image(xt, yt, :); % select the template in the image
