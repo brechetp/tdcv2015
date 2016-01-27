@@ -7,7 +7,7 @@ numImages = 201;
 for i = 1:numImages;
     num = i-1;
     
-    filename = sprintf('../../ex09/seq/im%03d.pgm', num );
+    filename = sprintf('seq/im%03d.pgm', num );
     imgs{i} = im2double(imread(filename));
 end
 Np = 1000;
@@ -33,7 +33,7 @@ coords = [xMin, yMin; xMax, yMax];
 %imshow(img(xMin:xMax, yMin:yMax));
 
 if 1
-    valueRef = computeRectangleValue(img, coords, zeros(1, 8));
+    valueRef = warp(img, coords, zeros(4, 2));
     A = cell(1);
     for j = 1:10
         H = zeros(441, Np);
@@ -43,7 +43,7 @@ if 1
             [warped, shift] = random_warp(img, coords, range);
 
 
-            deltaI = valueRef - warped';
+            deltaI = valueRef - warped;
 
             H(:,i) = deltaI';
 
@@ -53,34 +53,28 @@ if 1
         A{j} = Y * H' * inv(H * H');
     end
 end
-P = zeros(8, numImages);
-
-42
-p = zeros(8, 1)
+p = zeros(4, 2);
 %for numImg = 2:numImages
 for numImg = 1:numImages
    img = imgs{numImg};
    for numA = 10:-1:1
-       numA;
       for iter = 1:5
 
-          val = computeRectangleValue(img, coords, p);
+          val = warp(img, coords, p);
           diff = val - valueRef;
           
-          size(diff);
-          size(A{numA});
+          deltaP = reshape(A{numA} * diff, [4, 2]);
+          %Hc = dlt([P{1}, ones(4, 1)], [p, ones(4, 1)]);
+          %Hu = dlt([p, ones(4, 1)], [p + delta_p, ones(4, 1)]);
+          %Hn = Hc * Hu;
           
-          val;
-          numImg;
-          numA;
-          diff;
-          deltaP = A{numA} * diff';
-          
+
+
           p = p + deltaP;
           
       end
    end
-   p
+   display_p(img, coords, p)
    %figure;
    %imshow(img);
    

@@ -3,6 +3,8 @@ function [mag, dir] = compute_gradient(image)
 
 if size(image, 3) == 1
   [mag, ori] = imgradient(image);
+  dir = mod(ori, 180); % we discard orientation, keep only the direction
+  dir = dir / 180. * pi; % converts to rad
   return
 end
 
@@ -11,7 +13,7 @@ end
 for channel = 1:3
   [g_mag(:, :, channel), g_ori(:, :, channel)] = imgradient(image(:, :, channel));
 end
-  
+
 [mag, idx] = max(g_mag, [], 3); % keep the maximum gradient from all channels
 % idx keeps the indices of the maxima
 

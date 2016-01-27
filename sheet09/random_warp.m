@@ -27,9 +27,8 @@ end
 n_corners = [corners, ones(4, 1)];
 n_rand_corners = [rand_corners, ones(4, 1)];
 % rand_corners are the new corners of the rectangle
-H = dlt(n_corners, n_rand_corners);
-invH = inv(H);
-T = projective2d(H');
+invH = dlt(n_rand_corners, n_corners);
+%invH = inv(H);
 i=1; %  index of the warped vecotr
 for x=x_min:5:x_max
   for y=y_min:5:y_max
